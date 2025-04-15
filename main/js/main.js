@@ -6,9 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const elementInView = (el, offset = 100) => {
         const elementTop = el.getBoundingClientRect().top;
-        return (
-            elementTop <= (window.innerHeight || document.documentElement.clientHeight) - offset
-        );
+        return elementTop <= (window.innerHeight || document.documentElement.clientHeight) - offset;
     };
 
     const handleScrollAnimation = () => {
@@ -49,10 +47,7 @@ function showPopup(type) {
 
 function loadMap(coordinates, zoomLevel) {
     const mapContainer = document.getElementById('map-container');
-
-    if (mapContainer._leaflet_id) {
-        mapContainer.innerHTML = "";
-    }
+    if (mapContainer._leaflet_id) mapContainer.innerHTML = "";
 
     const map = L.map(mapContainer).setView(coordinates, zoomLevel);
 
@@ -71,7 +66,6 @@ function updateContent(data) {
 function showNextArea() {
     const type = document.getElementById('popup-title').innerText.toLowerCase().replace(' ', '');
     const data = emergencyData[type];
-
     currentIndex = (currentIndex + 1) % data.content.length;
     updateContent(data.content[currentIndex]);
     loadMap(data.content[currentIndex].coordinates, data.content[currentIndex].zoom);
@@ -80,7 +74,6 @@ function showNextArea() {
 function showPreviousArea() {
     const type = document.getElementById('popup-title').innerText.toLowerCase().replace(' ', '');
     const data = emergencyData[type];
-
     currentIndex = (currentIndex - 1 + data.content.length) % data.content.length;
     updateContent(data.content[currentIndex]);
     loadMap(data.content[currentIndex].coordinates, data.content[currentIndex].zoom);
@@ -92,68 +85,128 @@ function closePopup() {
 }
 
 // ===================
-// Medical Page Map + Spinner + API
+// Medical Page Map + Spinner + Emergency Services + Toggle Legend
 // ===================
 document.addEventListener("DOMContentLoaded", () => {
     const medicalMap = document.getElementById("hospital-map");
     const spinner = document.getElementById("map-loading-spinner");
 
-    if (medicalMap) {
-        if (spinner) spinner.style.display = "block";
+    if (!medicalMap) return;
 
-        const map = L.map("hospital-map").setView([25.7617, -80.1918], 13);
+    if (spinner) spinner.style.display = "block";
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: "© OpenStreetMap contributors"
-        }).addTo(map);
+    const map = L.map("hospital-map").setView([25.7617, -80.1918], 13);
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    if (spinner) spinner.style.display = "none";
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors"
+    }).addTo(map);
 
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
+    // Icons
+    const hospitalIcon = L.icon({
+        iconUrl: 'images/aid icon.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
 
-                    map.setView([lat, lon], 14);
+    const shelterIcon = L.icon({
+        iconUrl: 'images/emergency-shelter icon.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
 
-                    L.marker([lat, lon])
-                        .addTo(map)
-                        .bindPopup("You are here.")
-                        .openPopup();
+    const aidIcon = L.icon({
+        iconUrl: 'images/hospital icon.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
 
-                    // Fetch real nearby hospital using OpenStreetMap Nominatim API
-                    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=hospital&limit=1&bounded=1&viewbox=${lon - 0.05},${lat + 0.05},${lon + 0.05},${lat - 0.05}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data && data.length > 0) {
-                                const hospital = data[0];
-                                const hospitalLat = parseFloat(hospital.lat);
-                                const hospitalLon = parseFloat(hospital.lon);
+    // Layer groups
+    const hospitalLayer = L.layerGroup().addTo(map);
+    const shelterLayer = L.layerGroup().addTo(map);
+    const aidLayer = L.layerGroup().addTo(map);
 
-                                L.marker([hospitalLat, hospitalLon])
-                                    .addTo(map)
-                                    .bindPopup(hospital.display_name)
-                                    .openPopup();
-                            } else {
-                                alert("No hospitals found nearby.");
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Hospital lookup failed:", error);
-                        });
-                },
-                (error) => {
-                    if (spinner) spinner.style.display = "none";
-                    alert("Location access denied. Showing default location.");
-                }
-            );
-        } else {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
             if (spinner) spinner.style.display = "none";
-            alert("Geolocation not supported.");
-        }
+
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            map.setView([lat, lon], 14);
+
+            L.marker([lat, lon])
+                .addTo(map)
+                .bindPopup("You are here.")
+                .openPopup();
+
+            // Emergency service types
+            const emergencyTypes = [
+                { type: "hospital", icon: hospitalIcon, layer: hospitalLayer },
+                { type: "shelter", icon: shelterIcon, layer: shelterLayer },
+                { type: "first aid", icon: aidIcon, layer: aidLayer }
+            ];
+
+            emergencyTypes.forEach(service => {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${service.type}&limit=10&bounded=1&viewbox=${lon - 0.05},${lat + 0.05},${lon + 0.05},${lat - 0.05}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(location => {
+                            const lat = parseFloat(location.lat);
+                            const lon = parseFloat(location.lon);
+
+                            const marker = L.marker([lat, lon], { icon: service.icon })
+                                .bindPopup(`<b>${location.display_name}</b>`);
+
+                            service.layer.addLayer(marker);
+                        });
+                    })
+                    .catch(err => console.error(`Error fetching ${service.type}:`, err));
+            });
+
+            // Mini toggle legend
+            const legend = L.control({ position: "topright" });
+
+            legend.onAdd = function () {
+                const div = L.DomUtil.create("div", "info legend");
+                div.innerHTML = `
+                    <div style="background:#fff; padding:10px; border-radius:8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); font-family: Inter, sans-serif;">
+                        <strong>Filter Services</strong><br/>
+                        <label><input type="checkbox" id="toggle-hospitals" checked> 🏥 Hospitals</label><br/>
+                        <label><input type="checkbox" id="toggle-shelters" checked> 🛌 Shelters</label><br/>
+                        <label><input type="checkbox" id="toggle-aid" checked> 🩹 Aid Stations</label>
+                    </div>
+                `;
+                return div;
+            };
+
+            legend.addTo(map);
+
+            // Toggle layers with checkboxes
+            document.addEventListener("change", (e) => {
+                if (e.target.id === "toggle-hospitals") {
+                    e.target.checked ? map.addLayer(hospitalLayer) : map.removeLayer(hospitalLayer);
+                }
+                if (e.target.id === "toggle-shelters") {
+                    e.target.checked ? map.addLayer(shelterLayer) : map.removeLayer(shelterLayer);
+                }
+                if (e.target.id === "toggle-aid") {
+                    e.target.checked ? map.addLayer(aidLayer) : map.removeLayer(aidLayer);
+                }
+            });
+
+        }, (error) => {
+            if (spinner) spinner.style.display = "none";
+            alert("Location access denied. Showing default location.");
+        });
+    } else {
+        if (spinner) spinner.style.display = "none";
+        alert("Geolocation not supported.");
     }
 });
+
 
 // ===================
 // Form Submission to Google Sheets
@@ -161,30 +214,76 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("medical-form");
 
+    // ✅ Auto-fill today's date in the date input
+    const dateField = document.getElementById("date");
+    if (dateField) {
+        const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        dateField.value = today;
+    }
+
     if (form) {
         form.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const name = document.getElementById("name").value;
-            const location = document.getElementById("location").value;
-            const condition = document.getElementById("condition").value;
+            const name = document.getElementById("name").value.trim();
+            const location = document.getElementById("location").value.trim();
+            const condition = document.getElementById("condition").value.trim();
+            const date = document.getElementById("date").value;
+            const submitButton = form.querySelector("button[type='submit']");
 
-            fetch("https://script.google.com/macros/s/AKfycbyIbvoEuzW5R61xN1-SWvJFa0R49nXyIt8Z6mry2B2KTOfIOxkenxwbdW0yx8hpjEPC/exec", {
-                method: "POST",
-                body: JSON.stringify({ name, location, condition }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert("Request submitted successfully.");
-                form.reset();
-            })
-            .catch(error => {
-                alert("There was an error submitting the request.");
-                console.error(error);
-            });
+            if (!name || !location || !condition || !date) {
+                alert("Please complete all fields before submitting.");
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Submitting...";
+
+            // Function to send data to Google Sheet
+            const sendData = (lat = '', lon = '') => {
+                fetch("https://script.google.com/macros/s/AKfycbxDjLlgxON4RbVDf2S3c2_Ht6F0rGEmstTXBG4rSFPk0b0Byf02Wsh38d2BnGP_xNs/exec", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        name,
+                        location,
+                        condition,
+                        date // 👈 manually selected date from form
+                    }),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert("Request submitted successfully.");
+                    form.reset();
+                    if (dateField) dateField.value = new Date().toISOString().split('T')[0];
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Submit Request";
+                })
+                .catch(error => {
+                    alert("There was an error submitting the request.");
+                    console.error(error);
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Submit Request";
+                });
+            };
+
+            // Use geolocation if available
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        sendData(position.coords.latitude, position.coords.longitude);
+                    },
+                    () => {
+                        sendData(); // no location fallback
+                    }
+                );
+            } else {
+                sendData();
+            }
         });
     }
 });
+
+

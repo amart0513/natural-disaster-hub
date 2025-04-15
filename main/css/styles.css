@@ -434,6 +434,17 @@ footer a:hover {
     to { transform: rotate(360deg); }
 }
 
+.leaflet-control .legend input {
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.leaflet-control .legend label {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 6px;
+}
+
 
 
 /* --------- Responsive Design --------- */
