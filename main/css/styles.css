@@ -99,19 +99,65 @@ section h2 {
 }
 
 .card {
-    background-color: #fff;
-    border: 2px solid #e1e4ea;
-    border-radius: 10px;
-    padding: 20px;
     width: 300px;
-    height: 360px; /* 🔧 Optional: consistent card height */
-    text-align: left;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    height: 360px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
 }
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 25px 20px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+}
+
+.card-overlay h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.card-overlay a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #ffcc00;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.card-overlay a:hover {
+    text-decoration: underline;
+}
+
 
 /* 🔧 Fix for image formatting */
 .card img {
