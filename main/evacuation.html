@@ -6,6 +6,11 @@
     <title>Evacuation Centers | StormReady Portal</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 </head>
 <body>
     <header>
@@ -17,18 +22,22 @@
             <a href="medical.html">Medical Aid</a>
             <a href="mental-health.html">Mental Health</a>
             <a href="contact.html">Contact</a>
-            <!--<a href="emergency-library.html">Emergency Library</a>-->
         </nav>
     </header>
 
-    <section>
+    <section class="evacuation-centers">
         <h2>List of Evacuation Centers</h2>
-        <ul>
-            <li><b>South Miami Shelter</b> — Capacity: 200 — Contact: (305) 123-4567</li>
-            <li><b>North Miami Center</b> — Capacity: 150 — Contact: (305) 765-4321</li>
-            <li><b>Downtown Safe Zone</b> — Capacity: 300 — Contact: (305) 987-6543</li>
-        </ul>
-    </section>
+      
+        <input type="text" id="search-center" placeholder="Search by name or capacity..." />
+      
+        <div class="center-cards" id="center-list">
+          <!-- Cards dynamically generated in JS -->
+        </div>
+      
+        <div id="evacuation-map" style="height: 400px; margin-top: 40px; border-radius: 10px;"></div>
+      </section>
+      
+      
 
     <footer>
         <div class="footer-content">
@@ -40,5 +49,6 @@
             </div>
         </div>
     </footer>
+    <script src="js/main.js"></script>
 </body>
 </html>

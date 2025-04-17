@@ -6,6 +6,9 @@
     <title>Medical Aid | StormReady Portal</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
 </head>
 <body>
     <header>
@@ -21,21 +24,41 @@
         </nav>
     </header>
 
-    <section>
-        <h2>Request Medical Assistance</h2>
-        <form>
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" required>
+    <section class="medical-assistance-grid">
+        <div class="form-container">
+            <h2>Request Medical Assistance</h2>
+            <form id="medical-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" placeholder="Enter your city or zip code" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="condition">Medical Condition</label>
+                    <textarea id="condition" rows="4" placeholder="Brief description of the condition" required></textarea>
+                </div>
 
-            <label for="location">Location:</label>
-            <input type="text" id="location" required>
-
-            <label for="condition">Medical Condition:</label>
-            <textarea id="condition" rows="4" required></textarea>
-
-            <button type="submit">Submit Request</button>
-        </form>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>                
+    
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </form>
+        </div>
+    
+        <div class="map-container">
+            <h3>Nearest Medical Facility</h3>
+            <div id="hospital-map"></div>
+        </div>
     </section>
+    
+    
 
     <footer>
         <div class="footer-content">
