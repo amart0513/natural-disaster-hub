@@ -720,7 +720,90 @@ footer a:hover {
     font-size: 1.1rem;
     margin-bottom: 20px;
   }
+
+  .disaster-section-title {
+    text-align: center;
+    padding: 40px 20px 10px;
+  }
   
+  .disaster-section-title h2 {
+    font-size: 2rem;
+    color: #002d72;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  
+  .disaster-section-title p {
+    color: #555;
+    font-size: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* --------- Login/Register Pages --------- */
+.auth-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 12px;
+    text-align: center;
+  }
+  
+  .auth-container h2 {
+    color: #002d72;
+    margin-bottom: 10px;
+    font-size: 2rem;
+  }
+  
+  .auth-container p {
+    margin-bottom: 25px;
+    color: #555;
+  }
+  
+  .auth-container input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .auth-button {
+    width: 100%;
+    background-color: #004080;
+    color: white;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .auth-button:hover {
+    background-color: #003366;
+  }
+  
+  .auth-switch {
+    margin-top: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .auth-switch a {
+    color: #004080;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .auth-switch a:hover {
+    text-decoration: underline;
+  }
+    
   
 
 
