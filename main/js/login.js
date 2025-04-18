@@ -1,6 +1,6 @@
 // login.js
 document.getElementById('login-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
 
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
