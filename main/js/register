@@ -1,1 +1,20 @@
+// register.js
+document.getElementById('register-form').addEventListener('submit', function (e) {
+    e.preventDefault();
 
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Example Firebase registration logic
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Show success message
+            alert("Registration successful!");
+            // Optionally redirect the user
+            window.location.href = "login.html"; 
+        })
+        .catch((error) => {
+            // Handle registration errors
+            alert(error.message);
+        });
+});
