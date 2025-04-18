@@ -804,7 +804,160 @@ footer a:hover {
     text-decoration: underline;
   }
     
-  
+
+/* --------- Resources enhanced Page --------- */
+.resources-content {
+  padding: 50px 20px;
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.section-title {
+  color: #003b80;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  color: #444;
+  margin-bottom: 30px;
+}
+
+.search-wrapper {
+  margin-bottom: 30px;
+}
+
+#resource-search {
+  padding: 12px 20px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.resource-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.resource-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  text-align: left;
+  transition: transform 0.3s;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+}
+
+.resource-card h3 {
+  font-size: 1.2rem;
+  color: #003b80;
+  margin-bottom: 10px;
+}
+
+.resource-card p {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.resource-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #0077cc;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.safety-tips {
+  margin-top: 60px;
+  text-align: left;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.safety-tips h3 {
+  color: #003b80;
+  margin-bottom: 15px;
+}
+
+.safety-tips ul {
+  list-style: disc;
+  padding-left: 20px;
+  color: #333;
+  font-size: 1rem;
+}
+
+
+.resource-categories {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.resource-card {
+  background: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  max-width: 400px;
+}
+
+.faq-answer {
+  display: none;
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.faq-toggle.active + .faq-answer {
+  display: block;
+}
+
+.category-filters {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.filter-btn {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  margin: 5px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background-color: #002b5c;
+}
+
+.fema-list {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+.fema-list li {
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+
 
 
 /* --------- Responsive Design --------- */
