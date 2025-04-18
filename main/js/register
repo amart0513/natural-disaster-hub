@@ -10,8 +10,10 @@ document.getElementById('register-form').addEventListener('submit', function (e)
         .then((userCredential) => {
             // Show success message
             alert("Registration successful!");
-            // Optionally redirect the user
-            window.location.href = "login.html"; 
+            // Redirect to login.html after 3 seconds
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 3000);
         })
         .catch((error) => {
             // Handle registration errors
