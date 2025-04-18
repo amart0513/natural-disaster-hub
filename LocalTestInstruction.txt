@@ -1,0 +1,94 @@
+# Natural Disaster Hub (Local Setup Guide)
+
+This is a local project meant to simulate a natural disaster coordination system. It has a frontend (static files), backend (Node.js + Express), and a MySQL database.
+
+This guide explains how to set everything up from scratch.
+
+---
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+- Node.js (LTS) – https://nodejs.org  
+- MySQL Server – from the official installer: https://dev.mysql.com/downloads/installer/  
+- MySQL Workbench (optional but helpful)
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/amart0513/natural-disaster-hub.git
+cd natural-disaster-hub
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 3. Set Up the Database
+
+1. Open MySQL Workbench  
+2. Connect to your local MySQL server  
+3. Open the file located at `db/setup.sql`  
+4. Run the entire file  
+
+This will:
+- Create the `disaster_hub` database
+- Create all required tables
+- Insert sample data
+
+---
+
+## 4. Configure Database Credentials
+
+Open `db.js` and update it with your MySQL credentials:
+
+```js
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'your_mysql_user',
+  password: 'your_mysql_password',
+  database: 'disaster_hub'
+});
+```
+
+---
+
+## 5. Run the Server
+
+```bash
+npm start
+```
+
+If successful, you’ll see:
+
+```
+Connected to MySQL Database
+Server running on http://localhost:3000
+```
+
+---
+
+## 6. Test It
+
+Visit in your browser:
+
+- http://localhost:3000 – Main website
+- http://localhost:3000/api/disasters – Example API route
+
+---
+
+## 7. Notes
+
+- All API routes are in the `routes/` folder
+- Static frontend files are served from the `main/` directory
+- The default page is `main/index.html`
+
