@@ -1,25 +1,32 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const app = express();
-
-const disasterRoutes = require('./routes/disasters');
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
 
-// API routes
-app.use('/api/disasters', disasterRoutes);
+// Route imports
+const disasterRoutes = require('./routes/disasters');
+const locationRoutes = require('./routes/locations');
+const resourceRoutes = require('./routes/resources');
+const userRoutes = require('./routes/users');
+const requestRoutes = require('./routes/requests');
 
-// Serve frontend from /main folder
+// API Routes
+app.use('/api/disasters', disasterRoutes);
+app.use('/api/locations', locationRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/requests', requestRoutes);
+
+// Serve frontend
 app.use(express.static(path.join(__dirname, 'main')));
 
-// Optional: serve index.html for root
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'main/index.html'));
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
 });
