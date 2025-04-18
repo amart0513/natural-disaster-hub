@@ -1,17 +1,22 @@
 // login.js
 document.getElementById('login-form').addEventListener('submit', function (e) {
     e.preventDefault();
-  
+
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
-  
+
+    // Example Firebase login logic
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Redirect after login
-        window.location.href = "index.html"; 
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  });
-  
+        .then((userCredential) => {
+            // Display success message (optional)
+            alert("Login successful!");
+
+            // Redirect to index.html
+            window.location.href = "index.html";
+        })
+        .catch((error) => {
+            // Handle login errors
+            const errorMessage = error.message;
+            alert("Login failed: " + errorMessage);
+        });
+});
