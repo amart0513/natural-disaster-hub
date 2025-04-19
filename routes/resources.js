@@ -10,3 +10,20 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+
+router.post('/add', (req, res) => {
+  const { name, category, quantity, location_id } = req.body;
+
+  const query = `
+    INSERT INTO resources (name, category, quantity, location_id)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(query, [name, category, quantity, location_id], (err, result) => {
+    if (err) {
+      console.error('Resource insert error:', err);
+      return res.status(500).json({ message: 'Database error inserting resource.' });
+    }
+    res.status(200).json({ message: 'Resource added successfully.' });
+  });
+});
