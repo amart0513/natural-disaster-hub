@@ -57,8 +57,11 @@ CREATE TABLE requests (
 -- Sample LOCATIONS
 INSERT INTO locations (name, latitude, longitude, address)
 VALUES 
-('Central Park Shelter', 40.785091, -73.968285, 'Central Park, NY'),
-('Downtown Relief Center', 34.052235, -118.243683, 'Los Angeles, CA');
+('Downtown Miami Shelter', 25.7743, -80.1937, '400 SE 2nd Ave, Miami, FL'),
+('Fort Lauderdale Relief Center', 26.1224, -80.1373, '888 Las Olas Blvd, Fort Lauderdale, FL'),
+('Palm Beach Emergency Hub', 26.7056, -80.0364, '101 Clematis St, West Palm Beach, FL'),
+('Homestead Community Aid Station', 25.4687, -80.4776, '1601 N Krome Ave, Homestead, FL'),
+('Hialeah Distribution Point', 25.8576, -80.2781, '1800 W 49th St, Hialeah, FL');
 
 -- Sample DISASTERS
 INSERT INTO disaster_events (name, type, description, location_id, date_occurred)
