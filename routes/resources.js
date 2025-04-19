@@ -27,3 +27,19 @@ router.post('/add', (req, res) => {
     res.status(200).json({ message: 'Resource added successfully.' });
   });
 });
+
+router.get('/all', (req, res) => {
+  const query = `
+    SELECT r.id, r.name, r.category, r.quantity, l.name AS location_name
+    FROM resources r
+    JOIN locations l ON r.location_id = l.id
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching resources:', err);
+      return res.status(500).json({ message: 'Failed to retrieve resources.' });
+    }
+    res.json(results);
+  });
+});
