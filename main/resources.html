@@ -172,6 +172,22 @@
       <ul id="fema-updates" class="fema-list"></ul>
     </div>
 
+    <!-- Resource Display -->
+    <section class="resource-display">
+      <h2>Available Resources</h2>
+      <table id="resource-table" border="1" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
     <!-- Resource Request -->
     <section class="form-section">
       <h2>Add New Resource</h2>
@@ -193,9 +209,6 @@
 
       <p id="response-msg"></p>
     </section>
-
-    <script src="js/resource-submit.js"></script>
-
 
     <!-- FAQs -->
     <div class="faq-container">
@@ -276,5 +289,7 @@
   </script>
 
   <script src="js/main.js"></script>
+  <script src="js/resource-display.js"></script>
+  <script src="js/resource-submit.js"></script>
 </body>
 </html>
