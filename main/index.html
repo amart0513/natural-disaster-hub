@@ -17,39 +17,75 @@
             <a href="medical.html">Medical Aid</a>
             <a href="mental-health.html">Mental Health</a>
             <a href="contact.html">Contact</a>
+
+             <!-- NEW UI ELEMENTS -->
+             <input type="text" id="search-bar" placeholder="Search disasters...">
+            <a href="login.html" class="auth-button">Login</a>
+            <a href="register.html" class="auth-button">Register</a>
         </nav>
     </header>
-    
 
-    <section class="hero">
-        <h2>Empowering Communities During Disasters</h2>
-        <p>Get real-time updates, find emergency resources, and stay connected during crisis situations.</p>
-        <a href="resources.html" class="cta-button">Find Resources</a>
-    </section>
+    <section class="hero-home">
+        <div class="hero-content">
+          <h1>Be StormReady before Nature Strikes.</h1>
+          <p>Access verified emergency resources, evacuation routes, and support systems designed for South Florida residents and beyond.</p>
+          <a href="resources.html" class="cta-button">Explore Resources</a>
+        </div>
+      </section>
+      
 
+      <section class="disaster-section-title">
+        <h2>Browse Active Disasters</h2>
+        <p>Select a disaster below to find support resources and response updates.</p>
+      </section>
+      
+      
     <section class="card-container">
-        <div class="card scroll-in">
-            <img src="images/icon-fire.png" alt="Fire Icon">
-            <h3>Oklahoma Wildfires</h3>
-            <p>Assistance for those affected by the Oklahoma wildfires.</p>
-            <a href="#">Learn more</a>
+        <div class="disaster-card scroll-in" style="background-image: url('images/fire-icon.jpg');">
+          <div class="card-overlay">
+            <h3>California & Oklahoma Wildfires</h3>
+            <p>Assistance for those affected by the wildfires.</p>
+            <a class="card-button" href="https://www.redcross.org/about-us/our-work/disaster-relief/wildfire-relief/2025-california-wildfires.html?srsltid=AfmBOoorrwfN9GEhcKAMiNOENDNydgEu6jIYx36Q5Dd3xAWAv8yoKMLF">Learn more</a>
+          </div>
         </div>
-    
-        <div class="card scroll-in">
-            <img src="images/icon-tornado.png" alt="Tornado Icon">
-            <h3>Missouri & Arkansas Tornadoes</h3>
+      
+        <div class="disaster-card scroll-in" style="background-image: url('images/tornado.jpg');">
+          <div class="card-overlay">
+            <h3>Midwest Tornado Outbreak</h3>
             <p>Resources for communities impacted by tornadoes.</p>
-            <a href="#">Learn more</a>
+            <a class="card-button" href="https://www.savethechildren.org/us/what-we-do/emergency-response/tornado-relief?cid=Paid_Search:Google_Paid:Emer_Tornados:Nonbrand:040325&s_kwcid=AL!9048!3!743898993314!p!!g!!tornado%20relief&gad_source=1&gbraid=0AAAAAD_Epjci-zPCu9pODrtrCzF4rQCOh&gclid=Cj0KCQjwqv2_BhC0ARIsAFb5Ac8FKx-LMGg5G6k13BEnuctYa-AH-zLfQ4mezeRJnBxdA-xMnboJnU0aAvWzEALw_wcB&gclsrc=aw.ds">Learn more</a>
+          </div>
         </div>
-    
-        <div class="card scroll-in">
-            <img src="images/icon-medical.png" alt="Medical Icon">
-            <h3>Medical Aid Services</h3>
+      
+        <div class="disaster-card scroll-in" style="background-image: url('images/medic-aid.jpg');">
+          <div class="card-overlay">
+            <h3>Medical Aid Services for Affected Regions</h3>
             <p>Request immediate medical support for urgent situations.</p>
-            <a href="#">Get Help</a>
+            <a class="card-button" href="https://www.redcross.org/about-us/our-work/disaster-relief.html?srsltid=AfmBOoqxzlzXJLgaRxxBnHlLnd9jMLX-9UUQn9cfl9Y1S1RL89x_whoo">Get Help</a>
+          </div>
         </div>
-    </section>
-    
+      </section>
+      
+      <section class="how-to-use">
+        <h2>How to Use the StormReady Portal</h2>
+        <div class="how-grid">
+          <div class="how-step">
+            <img src="images/icon-map.png" alt="Map Icon">
+            <h3>Find Local Resources</h3>
+            <p>Use our maps to locate shelters, medical help, and emergency contacts based on your area.</p>
+          </div>
+          <div class="how-step">
+            <img src="images/icon-alert.png" alt="Alert Icon">
+            <h3>Stay Informed</h3>
+            <p>Get real-time updates about storms, evacuation alerts, and safety tips.</p>
+          </div>
+          <div class="how-step">
+            <img src="images/icon-help.png" alt="Help Icon">
+            <h3>Get Help</h3>
+            <p>Request assistance and receive guidance based on your needs—fast and securely.</p>
+          </div>
+        </div>
+      </section>
 
     <footer>
         <div class="footer-content">

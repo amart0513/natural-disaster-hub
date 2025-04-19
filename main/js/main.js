@@ -207,7 +207,97 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// ===================
+// search bar
+// ===================
+document.getElementById("search-bar").addEventListener("keyup", function () {
+    const query = this.value.toLowerCase();
+    const cards = document.querySelectorAll(".card");
+  
+    cards.forEach(card => {
+      const content = card.textContent.toLowerCase();
+      card.style.display = content.includes(query) ? "block" : "none";
+    });
+  });
 
+// ===================
+// Evacuation Map
+// ===================
+document.addEventListener("DOMContentLoaded", () => {
+    const centerList = document.getElementById("center-list");
+    const searchInput = document.getElementById("search-center");
+    const map = L.map("evacuation-map").setView([25.7617, -80.1918], 11); // Miami default
+  
+    // Add tile layer
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors"
+    }).addTo(map);
+  
+    // Sample evacuation center data
+    const centers = [
+      {
+        name: "South Miami Shelter",
+        capacity: 200,
+        contact: "(305) 123-4567",
+        coordinates: [25.7079, -80.2938]
+      },
+      {
+        name: "North Miami Center",
+        capacity: 150,
+        contact: "(305) 765-4321",
+        coordinates: [25.9003, -80.1622]
+      },
+      {
+        name: "Downtown Safe Zone",
+        capacity: 300,
+        contact: "(305) 987-6543",
+        coordinates: [25.7743, -80.1937]
+      }
+    ];
+  
+    // Function to render center cards
+    function renderCenters(data) {
+      centerList.innerHTML = "";
+      data.forEach(center => {
+        const card = document.createElement("div");
+        card.className = "center-card";
+        card.innerHTML = `
+          <h3>${center.name}</h3>
+          <p><strong>Capacity:</strong> ${center.capacity}</p>
+          <p><strong>Contact:</strong> ${center.contact}</p>
+          <button onclick="centerMap(${center.coordinates[0]}, ${center.coordinates[1]})">View on Map</button>
+        `;
+        centerList.appendChild(card);
+      });
+    }
+  
+    // Show all markers on the map
+    centers.forEach(center => {
+      L.marker(center.coordinates)
+        .addTo(map)
+        .bindPopup(`<strong>${center.name}</strong><br/>Capacity: ${center.capacity}<br/>Contact: ${center.contact}`);
+    });
+  
+    // Center map on a specific location (called by card buttons)
+    window.centerMap = (lat, lon) => {
+      map.setView([lat, lon], 14);
+    };
+  
+    // Search functionality
+    searchInput.addEventListener("input", () => {
+      const value = searchInput.value.toLowerCase();
+      const filtered = centers.filter(center =>
+        center.name.toLowerCase().includes(value) ||
+        center.capacity.toString().includes(value)
+      );
+      renderCenters(filtered);
+    });
+  
+    // Initial render
+    renderCenters(centers);
+  });
+  
+  
 // ===================
 // Form Submission to Google Sheets
 // ===================
