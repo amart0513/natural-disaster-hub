@@ -104,6 +104,28 @@
       border-radius: 20px;
       text-decoration: none;
     }
+    .resource-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  #resource-table {
+    border-collapse: collapse;
+    min-width: 600px;
+    text-align: center;
+  }
+
+  #resource-table th,
+  #resource-table td {
+    padding: 10px 20px;
+  }
+
+  #resource-table thead {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
   </style>
 </head>
 
@@ -171,6 +193,44 @@
       <h3 class="section-heading">Latest FEMA Disaster Updates</h3>
       <ul id="fema-updates" class="fema-list"></ul>
     </div>
+
+    <!-- Resource Display -->
+    <section class="resource-display">
+      <h2>Available Resources</h2>
+      <table id="resource-table" border="1" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Resource Request -->
+    <section class="form-section">
+      <h2>Add New Resource</h2>
+      <form id="resource-form">
+        <label for="name">Resource Name:</label><br>
+        <input type="text" id="name" required><br><br>
+
+        <label for="category">Category:</label><br>
+        <input type="text" id="category" required><br><br>
+
+        <label for="quantity">Quantity:</label><br>
+        <input type="number" id="quantity" required><br><br>
+
+        <label for="location_id">Select Location:</label><br>
+        <select id="location_id" required></select><br><br>
+
+        <button type="submit">Add Resource</button>
+      </form>
+
+      <p id="response-msg"></p>
+    </section>
 
     <!-- FAQs -->
     <div class="faq-container">
@@ -246,5 +306,7 @@
   </script>
 
   <script src="js/main.js"></script>
+  <script src="js/resource-display.js"></script>
+  <script src="js/resource-submit.js"></script>
 </body>
 </html>
