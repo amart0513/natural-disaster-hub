@@ -10,3 +10,13 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+
+router.get('/all', (req, res) => {
+  db.query('SELECT id, name FROM locations', (err, results) => {
+    if (err) {
+      console.error('Failed to fetch locations:', err);
+      return res.status(500).json({ message: 'Database error fetching locations.' });
+    }
+    res.json(results);
+  });
+});
