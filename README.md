@@ -40,8 +40,8 @@ The StormReady Resource Portal is a web application designed to provide South Fl
 
 ## Installation & Local Setup
 1. **Clone the repository:**  
-   git clone https://github.com/your-org/natural-disaster-hub-main.git
-   cd natural-disaster-hub-main
+   git clone https://github.com/your-org/natural-disaster-hub.git
+   cd natural-disaster-hub
    
 3. **Open in VS Code:**
    - Install the **Live Server** extension.
