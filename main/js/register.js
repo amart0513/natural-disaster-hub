@@ -24,5 +24,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     email.value = '';
     password.value = '';
   }
+
+  window.location.href = "login.html";
 });
 

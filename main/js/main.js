@@ -296,6 +296,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial render
     renderCenters(centers);
   });
+
+  // saved user
+  const user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    if (user) {
+    const nav = document.querySelector('nav');
+    nav.innerHTML += `
+        <span>Welcome, ${user.email}</span>
+        <a href="#" onclick="logout()">Logout</a>
+    `;
+    }
+
+    function logout() {
+    localStorage.removeItem('loggedInUser');
+    location.reload();
+    }
+
   
   
 // ===================

@@ -6,3 +6,4 @@ document.getElementById('login-form').addEventListener('submit', function (e) {
     // Redirect to index.html
     window.location.href = "index.html";
 });
+
