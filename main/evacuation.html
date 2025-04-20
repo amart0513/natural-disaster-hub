@@ -1,50 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evacuation Centers | StormReady Portal</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evacuation Centers | StormReady Portal</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fbfd;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #003366;
+      padding: 20px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .evacuation-centers {
+      padding: 40px 20px;
+      text-align: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    #search-center {
+      padding: 10px 16px;
+      border: 1px solid #ccc;
+      border-radius: 24px;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
+    .scroll-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .scroll-btn {
+      background-color: #004080;
+      color: white;
+      border: none;
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      margin: 0 10px;
+      flex-shrink: 0;
+    }
+
+    .scroll-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 24px;
+      padding: 20px 0;
+      max-width: 1000px;
+    }
+
+    .center-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      width: 300px;
+      text-align: left;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .center-card:hover {
+      transform: translateY(-5px);
+    }
+
+    #evacuation-map {
+      height: 400px;
+      margin-top: 40px;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>Evacuation Centers</h1>
-        <nav>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="resources.html">Resources</a>
-                <a href="evacuation.html">Evacuation Centers</a>
-                <a href="medical.html">Medical Aid</a>
-                <a href="mental-health-support.html">Mental Health Support</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-        </nav>
-    </header>
 
-    <section class="evacuation-centers">
-        <h2>List of Evacuation Centers</h2>
-      
-        <input type="text" id="search-center" placeholder="Search by name or capacity..." />
-      
-        <div class="center-cards" id="center-list">
-          <!-- Cards dynamically generated in JS -->
-        </div>
-      
-        <div id="evacuation-map" style="height: 400px; margin-top: 40px; border-radius: 10px;"></div>
-      </section>
-      
-      
-      <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 StormReady Resource Portal | Designed for South Florida Residents</p>
-        </div>
-    </footer>
-    <script src="js/main.js"></script>
+<body>
+  <header>
+    <h1>Evacuation Centers</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="resources.html">Resources</a>
+      <a href="evacuation.html">Evacuation Centers</a>
+      <a href="medical.html">Medical Aid</a>
+      <a href="mental-health-support.html">Mental Health Support</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="evacuation-centers">
+    <h2>List of Evacuation Centers</h2>
+    <input type="text" id="search-center" placeholder="Search by name or capacity..." />
+
+    <div class="scroll-wrapper">
+      <button class="scroll-btn" onclick="scrollCenters(-1)">&#10094;</button>
+      <div class="scroll-container" id="center-list"></div>
+      <button class="scroll-btn" onclick="scrollCenters(1)">&#10095;</button>
+    </div>
+
+    <div id="evacuation-map"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 StormReady Resource Portal | Designed for South Florida Residents</p>
+  </footer>
+
+  <script>
+    const centers = [
+      {
+        name: "Booker T. Washington Senior High",
+        address: "1200 NW 6th Ave, Miami, FL",
+        capacity: 250,
+        hours: "Open 24/7",
+        contact: "(305) 555-1234",
+        lat: 25.7815,
+        lon: -80.2010,
+      },
+      {
+        name: "Charles Drew Middle School",
+        address: "1801 NW 60th St, Miami, FL",
+        capacity: 200,
+        hours: "6am - 10pm",
+        contact: "(305) 555-5678",
+        lat: 25.8300,
+        lon: -80.2200,
+      },
+      {
+        name: "Liberty City Community Shelter",
+        address: "123 Liberty Ave, Miami, FL",
+        capacity: 180,
+        hours: "Open 24/7",
+        contact: "(305) 555-9012",
+        lat: 25.8422,
+        lon: -80.2105,
+      },
+      {
+        name: "Miami Dade College North Campus",
+        address: "11380 NW 27th Ave, Miami, FL",
+        capacity: 300,
+        hours: "Open 24/7",
+        contact: "(305) 555-7777",
+        lat: 25.8786,
+        lon: -80.2437,
+      },
+      {
+        name: "South Dade High School Shelter",
+        address: "28401 SW 167th Ave, Homestead, FL",
+        capacity: 350,
+        hours: "5am - 11pm",
+        contact: "(305) 555-8888",
+        lat: 25.5025,
+        lon: -80.4586,
+      },
+      {
+        name: "Downtown Relief Center",
+        address: "50 SE 2nd Ave, Miami, FL",
+        capacity: 220,
+        hours: "Open 24/7",
+        contact: "(305) 555-3131",
+        lat: 25.7748,
+        lon: -80.1918,
+      },
+      {
+        name: "Miramar Community Emergency Shelter",
+        address: "6700 Miramar Pkwy, Miramar, FL",
+        capacity: 260,
+        hours: "7am - 10pm",
+        contact: "(954) 555-4141",
+        lat: 25.9801,
+        lon: -80.2365,
+      },
+      {
+        name: "Nova High School Evacuation Site",
+        address: "3600 College Ave, Davie, FL",
+        capacity: 400,
+        hours: "Open 24/7",
+        contact: "(954) 555-5151",
+        lat: 26.0825,
+        lon: -80.2370,
+      },
+      {
+        name: "Pinecrest Shelter Facility",
+        address: "12500 Pinecrest Pkwy, Pinecrest, FL",
+        capacity: 175,
+        hours: "6am - 9pm",
+        contact: "(305) 555-9292",
+        lat: 25.6500,
+        lon: -80.3067,
+      }
+    ];
+
+    const map = L.map("evacuation-map").setView([25.7815, -80.1918], 11);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(map);
+
+    const markers = [];
+
+    centers.forEach(center => {
+      const marker = L.marker([center.lat, center.lon])
+        .addTo(map)
+        .bindPopup(`<strong>${center.name}</strong><br>${center.address}`);
+      markers.push({ ...center, marker });
+    });
+
+    function renderCenters(filter = "") {
+      const list = document.getElementById("center-list");
+      list.innerHTML = "";
+
+      markers.forEach(center => {
+        const match = center.name.toLowerCase().includes(filter) || String(center.capacity).includes(filter);
+        if (!filter || match) {
+          const div = document.createElement("div");
+          div.className = "center-card";
+          div.innerHTML = `
+            <h3>${center.name}</h3>
+            <p><strong>Location:</strong> ${center.address}</p>
+            <p><strong>Capacity:</strong> ${center.capacity} people</p>
+            <p><strong>Hours:</strong> ${center.hours}</p>
+            <p><strong>Contact:</strong> ${center.contact}</p>
+          `;
+          div.addEventListener("click", () => {
+            map.setView([center.lat, center.lon], 14);
+            center.marker.openPopup();
+          });
+          list.appendChild(div);
+        }
+      });
+    }
+
+    function scrollCenters(direction) {
+      const container = document.getElementById("center-list");
+      const cardWidth = 324; // 300 width + gap
+      container.scrollLeft += direction * cardWidth * 3;
+    }
+
+    document.getElementById("search-center").addEventListener("input", e => {
+      renderCenters(e.target.value.toLowerCase());
+    });
+
+    renderCenters(); // Initial render
+  </script>
 </body>
 </html>

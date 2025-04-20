@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
         coordinates: [25.7079, -80.2938]
       },
       {
-        name: "North Miami Center",
+        name: "Kendall Center",
         capacity: 150,
         contact: "(305) 765-4321",
         coordinates: [25.9003, -80.1622]
