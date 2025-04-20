@@ -15,7 +15,6 @@ The StormReady Resource Portal is a web application designed to provide South Fl
   - Emergency contacts  
   - Preparation tips  
   - Shelter locations  
-  - 2024 updates  
 - **Evacuation Centers**:  
   - Interactive map displaying evacuation center locations  
   - City filter for live-searching by name or capacity  
