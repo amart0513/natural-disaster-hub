@@ -11,11 +11,10 @@ The StormReady Resource Portal is a web application designed to provide South Fl
 
 ## Features
 - **Home**: Introduction and overview of the portal’s purpose and mission.  
-- **Resources**: Static resource cards categorized by disaster type (e.g., Water Safety, Winter Storm, Thunderstorm, Power Outage) with clickable tiles that open detailed pop-ups containing:  
+- **Resources**:
   - Emergency contacts  
   - Preparation tips  
   - Shelter locations  
-  - Affected areas map (country and state levels)  
   - 2024 updates  
 - **Evacuation Centers**:  
   - Interactive map displaying evacuation center locations  
@@ -25,16 +24,15 @@ The StormReady Resource Portal is a web application designed to provide South Fl
 - **Medical Aid**:  
   - Hospital lookup using Nominatim API and custom icons  
   - Clustering of emergency service markers (e.g., shelters, aid stations)  
-  - Loading spinner for map data  
 - **Mental Health**: Curated articles and embedded YouTube guides for coping strategies and support resources.  
-- **Contact**: Contact form for user feedback and inquiries with email verification and submission.  
+- **Contact**: Contact form for user feedback and inquiries.  
 
 ## Technologies Used
 - **HTML5** and **CSS3** (FEMA-inspired modern design)  
 - **JavaScript** with modular ES6 imports  
 - **Leaflet** + **OpenStreetMap** for interactive mapping  
 - **Nominatim API** for real hospital and service lookups  
-- **Firebase Authentication** for user registration, login/logout, and email verification  
+- **Oracle DB Encyption & Authentication** for user registration, login/logout, and email verification  
 - **Live Server** (VS Code Extension) for local development and testing  
 - **Google Sheets** backend (optional) for form submissions  
 
